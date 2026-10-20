@@ -22,7 +22,7 @@
     "crons": ["* * * * *"]
   },
   "vars": {
-    "APP_NAME": "I am home",
+    "APP_NAME": "iamhome",
     "APP_URL": "http://localhost:8787",
     "DEV_MODE": "1"
   },

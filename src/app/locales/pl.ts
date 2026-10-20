@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const pl: Record<Key, string> = {
-  brand: 'I am home',
+  brand: 'iamhome',
   tagline: 'Jedno dotknięcie, by dać znać bliskim, że jesteś w domu.',
   nav_home: 'Start',
   nav_contacts: 'Kontakty',
@@ -260,7 +260,7 @@ export const pl: Record<Key, string> = {
   guide_security: 'Trzymaj link w tajemnicy: każdy, kto go ma, może cię zameldować. Możesz go wygenerować ponownie w Ustawieniach.',
   privacy_title: 'Prywatność',
   privacy_body:
-    'I am home przechowuje twój e-mail, imiona i adresy dodanych kontaktów, utworzone reguły oraz godzinę każdego meldunku. Nic więcej. Bez dostępu do lokalizacji, bez skryptów analitycznych, bez reklam. Wiadomości są dostarczane przez Telegram, Resend (e-mail) i Twilio (SMS / WhatsApp) na ich własnych warunkach. Konto i wszystkie dane możesz usunąć w Ustawieniach w każdej chwili.',
+    'iamhome przechowuje twój e-mail, imiona i adresy dodanych kontaktów, utworzone reguły oraz godzinę każdego meldunku. Nic więcej. Bez dostępu do lokalizacji, bez skryptów analitycznych, bez reklam. Wiadomości są dostarczane przez Telegram, Resend (e-mail) i Twilio (SMS / WhatsApp) na ich własnych warunkach. Konto i wszystkie dane możesz usunąć w Ustawieniach w każdej chwili.',
   common_close: 'Zamknij',
   common_error: 'Coś poszło nie tak.',
   common_offline: 'Jesteś offline. Meldunek wymaga połączenia.',

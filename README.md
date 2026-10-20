@@ -1,4 +1,4 @@
-# I am home
+# iamhome
 
 One tap to tell the people who worry about you that you're home. No location sharing, ever.
 

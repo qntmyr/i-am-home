@@ -1,6 +1,6 @@
 import { api, ApiError } from './api';
 import { ensureLang, getLang, setLang, t, type Lang } from './i18n';
-import { h, clear, icon, type IconName } from './ui';
+import { h, clear, icon, logo, type IconName } from './ui';
 import type { MeDTO } from '../shared/types';
 import { renderLanding } from './views/landing';
 import { renderLogin } from './views/login';
@@ -119,7 +119,7 @@ function shell(active: string, main: HTMLElement): HTMLElement {
   const sidebar = h(
     'aside',
     { class: 'sidebar' },
-    h('a', { href: '/', class: 'brand', onClick: (e: Event) => { e.preventDefault(); navigate('/'); } }, h('span', { class: 'logo' }, icon('home')), t('brand')),
+    h('a', { href: '/', class: 'brand', onClick: (e: Event) => { e.preventDefault(); navigate('/'); } }, logo(), h('span', { class: 'wordmark' }, t('brand'))),
     h('nav', { class: 'nav' }, items.map(link)),
     h('div', { class: 'spacer' }),
     h('p', { class: 'small muted', style: 'padding: 0 12px' }, state.me?.user.email ?? ''),

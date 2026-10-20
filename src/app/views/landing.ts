@@ -1,6 +1,6 @@
 import type { View } from '../main';
 import { LANGS, getLang, setLang, t, type Lang } from '../i18n';
-import { h, icon, type IconName } from '../ui';
+import { h, icon, logo, type IconName } from '../ui';
 
 export const renderLanding: View = (root, ctx) => {
   const go = (path: string) => (e: Event) => {
@@ -45,7 +45,7 @@ export const renderLanding: View = (root, ctx) => {
       h(
         'header',
         { class: 'topbar' },
-        h('a', { href: '/', class: 'brand', onClick: go('/') }, h('span', { class: 'logo', style: 'width:32px;height:32px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center' }, icon('home')), t('brand')),
+        h('a', { href: '/', class: 'brand', onClick: go('/') }, logo(), h('span', { class: 'wordmark' }, t('brand'))),
         h(
           'nav',
           null,

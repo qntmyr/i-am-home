@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const pt: Record<Key, string> = {
-  brand: 'I am home',
+  brand: 'iamhome',
   tagline: 'Um toque para dizer a quem se preocupa contigo que já chegaste a casa.',
   nav_home: 'Início',
   nav_contacts: 'Contactos',
@@ -260,7 +260,7 @@ export const pt: Record<Key, string> = {
   guide_security: 'Mantém o link privado: quem o tiver pode registar o teu check-in. Podes regenerá-lo nas Definições.',
   privacy_title: 'Privacidade',
   privacy_body:
-    'O I am home guarda o teu email, os nomes e endereços dos contactos que adicionas, as regras que crias e a hora de cada check-in. Mais nada. Sem permissão de localização, sem scripts de análise, sem publicidade. As mensagens são entregues através do Telegram, Resend (email) e Twilio (SMS / WhatsApp) segundo as suas próprias condições. Podes eliminar a tua conta e todos os dados nas Definições a qualquer momento.',
+    'O iamhome guarda o teu email, os nomes e endereços dos contactos que adicionas, as regras que crias e a hora de cada check-in. Mais nada. Sem permissão de localização, sem scripts de análise, sem publicidade. As mensagens são entregues através do Telegram, Resend (email) e Twilio (SMS / WhatsApp) segundo as suas próprias condições. Podes eliminar a tua conta e todos os dados nas Definições a qualquer momento.',
   common_close: 'Fechar',
   common_error: 'Algo correu mal.',
   common_offline: 'Estás offline. O check-in precisa de ligação.',

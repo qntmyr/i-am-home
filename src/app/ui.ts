@@ -54,6 +54,19 @@ export function icon(name: IconName, cls = ''): SVGElement {
   return svg;
 }
 
+/** The iamhome mark: a house-shaped speech bubble with an "i" inside. Colour comes from currentColor, the cut-out from --cut. */
+export function logo(cls = ''): SVGElement {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 64 64');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('class', `logo ${cls}`.trim());
+  svg.innerHTML =
+    '<path d="M32 7 L56 25 V50 H28 L15 59 L17 50 H8 V25 Z" fill="currentColor" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>' +
+    '<circle cx="32" cy="26.5" r="3.8" fill="var(--cut, #fff)"/>' +
+    '<rect x="28.6" y="33.5" width="6.8" height="13" rx="3.4" fill="var(--cut, #fff)"/>';
+  return svg;
+}
+
 export type IconName = keyof typeof ICONS;
 const ICONS = {
   home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/>',

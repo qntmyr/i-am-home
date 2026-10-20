@@ -393,7 +393,7 @@ api.post('/push/test', async (c) => {
     user,
     'test',
     message(user.locale, 'pushTest'),
-    { title: 'I am home', body: message(user.locale, 'pushTestBody'), tag: 'test', url: '/app' },
+    { title: 'iamhome', body: message(user.locale, 'pushTestBody'), tag: 'test', url: '/app' },
   );
   return c.json({ ok: true, sent });
 });

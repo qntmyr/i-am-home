@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const fr: Record<Key, string> = {
-  brand: 'I am home',
+  brand: 'iamhome',
   tagline: 'Un bouton pour dire à ceux qui s’inquiètent que tu es bien rentré·e.',
   nav_home: 'Accueil',
   nav_contacts: 'Contacts',
@@ -260,7 +260,7 @@ export const fr: Record<Key, string> = {
   guide_security: 'Garde ce lien privé : quiconque l’a peut faire ton check-in. Tu peux le régénérer dans les réglages.',
   privacy_title: 'Confidentialité',
   privacy_body:
-    'I am home stocke ton email, les noms et adresses des contacts que tu ajoutes, les règles que tu crées et l’heure de chaque check-in. Rien d’autre. Aucune permission de localisation, aucun script d’analyse, aucune publicité. Les messages passent par Telegram, Resend (email) et Twilio (SMS / WhatsApp) selon leurs propres conditions. Tu peux supprimer ton compte et toutes tes données dans les réglages à tout moment.',
+    'iamhome stocke ton email, les noms et adresses des contacts que tu ajoutes, les règles que tu crées et l’heure de chaque check-in. Rien d’autre. Aucune permission de localisation, aucun script d’analyse, aucune publicité. Les messages passent par Telegram, Resend (email) et Twilio (SMS / WhatsApp) selon leurs propres conditions. Tu peux supprimer ton compte et toutes tes données dans les réglages à tout moment.',
   common_close: 'Fermer',
   common_error: 'Une erreur est survenue.',
   common_offline: 'Tu es hors ligne. Le check-in a besoin d’une connexion.',

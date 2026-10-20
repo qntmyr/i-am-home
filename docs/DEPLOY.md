@@ -1,4 +1,4 @@
-# Deploying I am home
+# Deploying iamhome
 
 Everything runs on one Cloudflare Worker (free plan is enough to start: 100k requests/day, D1 5 GB, cron included).
 
@@ -25,7 +25,7 @@ Magic links need an email provider. [Resend](https://resend.com) gives 3,000 ema
 
 1. Add and verify your domain (DNS records), or use the `onboarding@resend.dev` sender for tests.
 2. `npx wrangler secret put RESEND_API_KEY`
-3. `npx wrangler secret put EMAIL_FROM` → `I am home <hello@yourdomain.com>`
+3. `npx wrangler secret put EMAIL_FROM` → `iamhome <hello@yourdomain.com>`
 
 Without it, nobody can sign in (except in DEV_MODE).
 

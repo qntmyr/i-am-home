@@ -1,7 +1,7 @@
 import type { View } from '../main';
 import { api, ApiError } from '../api';
 import { getLang, t } from '../i18n';
-import { h, icon } from '../ui';
+import { h, icon, logo } from '../ui';
 
 export const renderLogin: View = async (root, ctx) => {
   // Already signed in? Straight to the app.
@@ -45,7 +45,7 @@ export const renderLogin: View = async (root, ctx) => {
     submit,
   );
   const brand = () =>
-    h('a', { href: '/', class: 'brand', onClick: (e: Event) => { e.preventDefault(); ctx.navigate('/'); } }, h('span', { class: 'logo', style: 'width:36px;height:36px;border-radius:11px;background:var(--accent);color:#fff;display:grid;place-items:center' }, icon('home')), t('brand'));
+    h('a', { href: '/', class: 'brand', onClick: (e: Event) => { e.preventDefault(); ctx.navigate('/'); } }, logo(), h('span', { class: 'wordmark' }, t('brand')));
   const card = h('div', { class: 'card' }, brand(), h('h1', { style: 'font-size:1.6rem' }, t('login_title')), h('p', { class: 'muted' }, t('login_sub')), form);
   root.appendChild(h('div', { class: 'auth' }, card));
 };

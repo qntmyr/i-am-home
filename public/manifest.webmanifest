@@ -1,6 +1,6 @@
 {
-  "name": "I am home",
-  "short_name": "I am home",
+  "name": "iamhome",
+  "short_name": "iamhome",
   "description": "One tap to tell the people who worry about you that you're home.",
   "start_url": "/app",
   "scope": "/",
