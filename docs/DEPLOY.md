@@ -1,4 +1,4 @@
-# Deploying iamhome
+# Deploying igothome
 
 Everything runs on one Cloudflare Worker (free plan is enough to start: 100k requests/day, D1 5 GB, cron included).
 
@@ -6,10 +6,10 @@ Everything runs on one Cloudflare Worker (free plan is enough to start: 100k req
 
 ```sh
 npx wrangler login
-npx wrangler d1 create i-am-home
+npx wrangler d1 create igothome
 ```
 
-Paste the returned `database_id` into `wrangler.jsonc`, set `APP_URL` to your production URL (e.g. `https://i-am-home.<account>.workers.dev` or a custom domain) and **delete the `DEV_MODE` var**.
+Paste the returned `database_id` into `wrangler.jsonc`, set `APP_URL` to your production URL (e.g. `https://igothome.<account>.workers.dev` or a custom domain) and **delete the `DEV_MODE` var**.
 
 ```sh
 npx wrangler secret put SESSION_SECRET      # any long random string
@@ -25,25 +25,25 @@ Magic links need an email provider. [Resend](https://resend.com) gives 3,000 ema
 
 1. Add and verify your domain (DNS records), or use the `onboarding@resend.dev` sender for tests.
 2. `npx wrangler secret put RESEND_API_KEY`
-3. `npx wrangler secret put EMAIL_FROM` → `iamhome <hello@yourdomain.com>`
+3. `npx wrangler secret put EMAIL_FROM` → `igothome <hello@yourdomain.com>`
 
 Without it, nobody can sign in (except in DEV_MODE).
 
 ## 3. Telegram bot (free channel)
 
-1. Talk to [@BotFather](https://t.me/BotFather): `/newbot`, pick a name and a username (e.g. `IAmHomeBot`). Copy the token.
+1. Talk to [@BotFather](https://t.me/BotFather): `/newbot`, pick a name and a username (e.g. `IGotHomeBot`). Copy the token.
 2. Secrets:
    ```sh
    npx wrangler secret put TELEGRAM_BOT_TOKEN
    npx wrangler secret put TELEGRAM_WEBHOOK_SECRET   # random string, 1–256 chars [A-Za-z0-9_-]
    ```
-   and add `"TELEGRAM_BOT_USERNAME": "IAmHomeBot"` to `vars` in `wrangler.jsonc` (optional, otherwise fetched from the API).
+   and add `"TELEGRAM_BOT_USERNAME": "IGotHomeBot"` to `vars` in `wrangler.jsonc` (optional, otherwise fetched from the API).
 3. Register the webhook and the bot commands:
    ```sh
    TELEGRAM_BOT_TOKEN=… TELEGRAM_WEBHOOK_SECRET=… APP_URL=https://your.app node scripts/telegram-setup.mjs
    ```
 
-Contacts open `https://t.me/IAmHomeBot?start=c_…` once; users connect their own account from Settings and can then send `/home`.
+Contacts open `https://t.me/IGotHomeBot?start=c_…` once; users connect their own account from Settings and can then send `/home`.
 
 ## 4. Web push reminders (VAPID)
 

@@ -67,7 +67,7 @@ interface PushData {
 }
 
 sw.addEventListener('push', (event) => {
-  let data: PushData = { title: 'iamhome', body: '' };
+  let data: PushData = { title: 'igothome', body: '' };
   try {
     data = { ...data, ...(event.data?.json() as PushData) };
   } catch {
@@ -99,13 +99,13 @@ sw.addEventListener('notificationclick', (event) => {
         body: JSON.stringify({ source: 'push' }),
       })
         .then((res) =>
-          sw.registration.showNotification('iamhome', {
+          sw.registration.showNotification('igothome', {
             body: res.ok ? 'Checked in. ✅' : 'Could not check in, open the app.',
             tag: 'checkin-result',
             icon: '/icon-192.png',
           }),
         )
-        .catch(() => sw.registration.showNotification('iamhome', { body: 'Offline: open the app to check in.', tag: 'checkin-result' })),
+        .catch(() => sw.registration.showNotification('igothome', { body: 'Offline: open the app to check in.', tag: 'checkin-result' })),
     );
     return;
   }

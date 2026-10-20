@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { message, normalizeLocale } from '../../src/shared/messages';
 
-const ctx = { userName: 'Quentin', contactName: 'Mum', time: '19:42', deadline: '20:00', appUrl: 'https://iamhome.example' };
+const ctx = { userName: 'Quentin', contactName: 'Mum', time: '19:42', deadline: '20:00', appUrl: 'https://igothome.example' };
 
 describe('messages', () => {
   it('announces a check-in in both languages', () => {

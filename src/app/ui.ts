@@ -54,7 +54,7 @@ export function icon(name: IconName, cls = ''): SVGElement {
   return svg;
 }
 
-/** The iamhome mark: a house-shaped speech bubble with an "i" inside. Colour comes from currentColor, the cut-out from --cut. */
+/** The igothome mark: a house-shaped speech bubble with an "i" inside. Colour comes from currentColor, the cut-out from --cut. */
 export function logo(cls = ''): SVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 64 64');

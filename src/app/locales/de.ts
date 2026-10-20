@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const de: Record<Key, string> = {
-  brand: 'iamhome',
+  brand: 'igothome',
   tagline: 'Ein Tipp, und die Menschen, die sich um dich sorgen, wissen, dass du zu Hause bist.',
   nav_home: 'Start',
   nav_contacts: 'Kontakte',
@@ -271,7 +271,7 @@ export const de: Record<Key, string> = {
   guide_security: 'Halte den Link geheim: Wer ihn hat, kann dich melden. In den Einstellungen kannst du ihn neu erzeugen.',
   privacy_title: 'Datenschutz',
   privacy_body:
-    'iamhome speichert deine E-Mail, die Namen und Adressen deiner Kontakte, deine Regeln und die Uhrzeit jeder Meldung. Sonst nichts. Kein Standortzugriff, kein Analyse-Skript, keine Werbung. Nachrichten werden über Telegram, Resend (E-Mail) und Twilio (SMS / WhatsApp) zu deren Bedingungen zugestellt. Du kannst dein Konto und alle Daten jederzeit in den Einstellungen löschen.',
+    'igothome speichert deine E-Mail, die Namen und Adressen deiner Kontakte, deine Regeln und die Uhrzeit jeder Meldung. Sonst nichts. Kein Standortzugriff, kein Analyse-Skript, keine Werbung. Nachrichten werden über Telegram, Resend (E-Mail) und Twilio (SMS / WhatsApp) zu deren Bedingungen zugestellt. Du kannst dein Konto und alle Daten jederzeit in den Einstellungen löschen.',
   common_close: 'Schließen',
   common_error: 'Etwas ist schiefgelaufen.',
   common_offline: 'Du bist offline. Meldungen brauchen eine Verbindung.',

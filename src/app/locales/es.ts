@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const es: Record<Key, string> = {
-  brand: 'iamhome',
+  brand: 'igothome',
   tagline: 'Un toque para decirle a quienes se preocupan por ti que ya estás en casa.',
   nav_home: 'Inicio',
   nav_contacts: 'Contactos',
@@ -271,7 +271,7 @@ export const es: Record<Key, string> = {
   guide_security: 'Mantén el enlace en privado: cualquiera que lo tenga puede registrar tu llegada. Puedes regenerarlo en Ajustes.',
   privacy_title: 'Privacidad',
   privacy_body:
-    'iamhome guarda tu correo, los nombres y direcciones de los contactos que añades, las reglas que creas y la hora de cada aviso. Nada más. Sin permiso de ubicación, sin scripts de análisis y sin publicidad. Los mensajes se entregan a través de Telegram, Resend (correo) y Twilio (SMS / WhatsApp) según sus propias condiciones. Puedes eliminar tu cuenta y todos los datos en Ajustes en cualquier momento.',
+    'igothome guarda tu correo, los nombres y direcciones de los contactos que añades, las reglas que creas y la hora de cada aviso. Nada más. Sin permiso de ubicación, sin scripts de análisis y sin publicidad. Los mensajes se entregan a través de Telegram, Resend (correo) y Twilio (SMS / WhatsApp) según sus propias condiciones. Puedes eliminar tu cuenta y todos los datos en Ajustes en cualquier momento.',
   common_close: 'Cerrar',
   common_error: 'Algo ha fallado.',
   common_offline: 'Estás sin conexión. Avisar necesita conexión.',

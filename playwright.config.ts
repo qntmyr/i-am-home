@@ -18,7 +18,7 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
   ],
   webServer: {
-    command: 'npm run build && npx wrangler d1 migrations apply i-am-home --local && npx wrangler dev --port 8787',
+    command: 'npm run build && npx wrangler d1 migrations apply igothome --local && npx wrangler dev --port 8787',
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,

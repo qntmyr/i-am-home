@@ -24,7 +24,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 migrations apply i-am-home --remote
+          command: d1 migrations apply igothome --remote
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:

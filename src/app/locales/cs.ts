@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const cs: Record<Key, string> = {
-  brand: 'iamhome',
+  brand: 'igothome',
   tagline: 'Jedním klepnutím dáš vědět lidem, kteří o tebe mají strach, že jsi doma.',
   nav_home: 'Domů',
   nav_contacts: 'Kontakty',
@@ -271,7 +271,7 @@ export const cs: Record<Key, string> = {
   guide_security: 'Odkaz drž v tajnosti: kdokoli s ním tě může ohlásit. V nastavení ho můžeš vytvořit znovu.',
   privacy_title: 'Soukromí',
   privacy_body:
-    'iamhome ukládá tvůj e-mail, jména a adresy kontaktů, které přidáš, pravidla, která vytvoříš, a čas každého ohlášení. Nic jiného. Žádný přístup k poloze, žádné analytické skripty, žádná reklama. Zprávy jsou doručovány přes Telegram, Resend (e-mail) a Twilio (SMS / WhatsApp) podle jejich podmínek. Účet i všechna data můžeš kdykoli smazat v nastavení.',
+    'igothome ukládá tvůj e-mail, jména a adresy kontaktů, které přidáš, pravidla, která vytvoříš, a čas každého ohlášení. Nic jiného. Žádný přístup k poloze, žádné analytické skripty, žádná reklama. Zprávy jsou doručovány přes Telegram, Resend (e-mail) a Twilio (SMS / WhatsApp) podle jejich podmínek. Účet i všechna data můžeš kdykoli smazat v nastavení.',
   common_close: 'Zavřít',
   common_error: 'Něco se pokazilo.',
   common_offline: 'Jsi offline. Ohlášení potřebuje připojení.',

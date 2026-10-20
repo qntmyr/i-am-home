@@ -1,7 +1,7 @@
 // English (source of truth for the UI strings).
 export const en = {
   // brand
-  brand: 'iamhome',
+  brand: 'igothome',
   tagline: "One tap to tell the people who worry about you that you're home.",
   // nav
   nav_home: 'Home',
@@ -280,7 +280,7 @@ export const en = {
   // privacy
   privacy_title: 'Privacy',
   privacy_body:
-    'iamhome stores your email, the names and addresses of the contacts you add, the rules you create and the time of each check-in. Nothing else. There is no location permission, no analytics script and no advertising. Messages are delivered through Telegram, Resend (email) and Twilio (SMS / WhatsApp) under their own terms. You can delete your account and every piece of data in Settings at any time.',
+    'igothome stores your email, the names and addresses of the contacts you add, the rules you create and the time of each check-in. Nothing else. There is no location permission, no analytics script and no advertising. Messages are delivered through Telegram, Resend (email) and Twilio (SMS / WhatsApp) under their own terms. You can delete your account and every piece of data in Settings at any time.',
   // misc
   common_close: 'Close',
   common_error: 'Something went wrong.',

@@ -5,12 +5,12 @@ SESSION_SECRET=change-me
 
 # Telegram bot (create one with @BotFather)
 TELEGRAM_BOT_TOKEN=
-TELEGRAM_BOT_USERNAME=IAmHomeBot
+TELEGRAM_BOT_USERNAME=IGotHomeBot
 TELEGRAM_WEBHOOK_SECRET=
 
 # Email via Resend
 RESEND_API_KEY=
-EMAIL_FROM="I am home <hello@yourdomain.com>"
+EMAIL_FROM="igothome <hello@yourdomain.com>"
 
 # SMS / WhatsApp via Twilio (Pro channels)
 TWILIO_ACCOUNT_SID=

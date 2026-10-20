@@ -1,7 +1,7 @@
 import type { Key } from './en';
 
 export const it: Record<Key, string> = {
-  brand: 'iamhome',
+  brand: 'igothome',
   tagline: 'Un tocco per dire a chi si preoccupa per te che sei a casa.',
   nav_home: 'Home',
   nav_contacts: 'Contatti',
@@ -271,7 +271,7 @@ export const it: Record<Key, string> = {
   guide_security: 'Tieni il link privato: chiunque lo abbia può registrare il tuo check-in. Puoi rigenerarlo nelle Impostazioni.',
   privacy_title: 'Privacy',
   privacy_body:
-    'iamhome conserva la tua email, i nomi e gli indirizzi dei contatti che aggiungi, le regole che crei e l’orario di ogni check-in. Nient’altro. Nessun permesso di localizzazione, nessuno script di analisi, nessuna pubblicità. I messaggi sono consegnati tramite Telegram, Resend (email) e Twilio (SMS / WhatsApp) secondo le loro condizioni. Puoi eliminare il tuo account e tutti i dati dalle Impostazioni in qualsiasi momento.',
+    'igothome conserva la tua email, i nomi e gli indirizzi dei contatti che aggiungi, le regole che crei e l’orario di ogni check-in. Nient’altro. Nessun permesso di localizzazione, nessuno script di analisi, nessuna pubblicità. I messaggi sono consegnati tramite Telegram, Resend (email) e Twilio (SMS / WhatsApp) secondo le loro condizioni. Puoi eliminare il tuo account e tutti i dati dalle Impostazioni in qualsiasi momento.',
   common_close: 'Chiudi',
   common_error: 'Qualcosa è andato storto.',
   common_offline: 'Sei offline. Il check-in ha bisogno di una connessione.',
