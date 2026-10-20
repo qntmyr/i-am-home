@@ -1,0 +1,20 @@
+{
+  "name": "I am home",
+  "short_name": "I am home",
+  "description": "One tap to tell the people who worry about you that you're home.",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF6EF",
+  "theme_color": "#E36F3C",
+  "lang": "en",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "I'm home", "short_name": "Check in", "url": "/app?checkin=1", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

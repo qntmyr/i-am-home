@@ -1,0 +1,30 @@
+{
+  "name": "i-am-home",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "One tap to tell the people who worry about you that you're home. No location sharing.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:app": "vite",
+    "build": "npm run typecheck && vite build",
+    "deploy": "npm run build && wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply i-am-home --local",
+    "db:migrate": "wrangler d1 migrations apply i-am-home --remote",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.sw.json && tsc --noEmit -p tsconfig.worker.json"
+  },
+  "dependencies": {
+    "@block65/webcrypto-web-push": "^2.0.0",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
+    "@playwright/test": "^1.50.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7",
+    "vitest": "^3.0.0",
+    "wrangler": "^4.0.0"
+  }
+}
