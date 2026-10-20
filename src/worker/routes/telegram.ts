@@ -89,23 +89,21 @@ async function handleUpdate(env: Env, update: TelegramUpdate): Promise<void> {
   }
   if (cmd === '/status') {
     if (!user) {
-      await sendTelegram(env, chatId, `Not linked. Open ${env.APP_URL}/app/settings to connect this chat.`);
+      await sendTelegram(env, chatId, message('en', 'tgNotLinked', { appUrl: env.APP_URL }));
       return;
     }
     const next = await env.DB.prepare('SELECT name, next_fire_at FROM rules WHERE user_id = ? AND enabled = 1 AND next_fire_at IS NOT NULL ORDER BY next_fire_at LIMIT 1')
       .bind(user.id)
       .first<{ name: string; next_fire_at: number }>();
     const last = user.last_checkin_at ? formatLocalDateTime(user.last_checkin_at, user.tz, user.locale) : '—';
-    const nextTxt = next ? `${next.name || 'Deadline'}: ${formatLocalDateTime(next.next_fire_at, user.tz, user.locale)}` : user.locale === 'fr' ? 'aucune' : 'none';
-    await sendTelegram(
-      env,
-      chatId,
-      user.locale === 'fr' ? `Dernier check-in : ${last}\nProchaine échéance : ${nextTxt}` : `Last check-in: ${last}\nNext deadline: ${nextTxt}`,
-    );
+    const nextTxt = next
+      ? `${next.name ? next.name + ': ' : ''}${formatLocalDateTime(next.next_fire_at, user.tz, user.locale)}`
+      : message(user.locale, 'tgNone');
+    await sendTelegram(env, chatId, message(user.locale, 'tgStatus', { time: last, deadline: nextTxt }));
     return;
   }
   if (cmd === '/help' || cmd.startsWith('/')) {
-    await sendTelegram(env, chatId, `/home – check in\n/status – last check-in and next deadline\n${env.APP_URL}`);
+    await sendTelegram(env, chatId, message(user?.locale ?? 'en', 'tgHelp', { appUrl: env.APP_URL }));
   }
 }
 

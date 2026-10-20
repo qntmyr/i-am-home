@@ -1,6 +1,6 @@
 import type { View } from '../main';
 import { api, ApiError } from '../api';
-import { getLang, setLang, t, type Lang } from '../i18n';
+import { LANGS, getLang, setLang, t, type Lang } from '../i18n';
 import { h, icon, toast, confirmDialog, copyText, fmtDate, clear } from '../ui';
 import { disablePush, enablePush, getPushState, type PushState } from '../push';
 
@@ -21,7 +21,7 @@ export const renderSettings: View = async (root, ctx) => {
   const name = h('input', { type: 'text', value: me.user.name, maxlength: 60, placeholder: 'Quentin' }) as HTMLInputElement;
   const tz = h('select', null, TIMEZONES.map((z) => h('option', { value: z, selected: z === me.user.tz }, z))) as HTMLSelectElement;
   if (!TIMEZONES.includes(me.user.tz)) tz.prepend(h('option', { value: me.user.tz, selected: true }, me.user.tz));
-  const lang = h('select', null, [h('option', { value: 'en', selected: me.user.locale === 'en' }, 'English'), h('option', { value: 'fr', selected: me.user.locale === 'fr' }, 'Français')]) as HTMLSelectElement;
+  const lang = h('select', null, LANGS.map((l) => h('option', { value: l.code, selected: me.user.locale === l.code }, l.label))) as HTMLSelectElement;
   const profileSave = h('button', { class: 'btn', type: 'submit' }, t('settings_save'));
   const profile = h(
     'form',
@@ -33,7 +33,7 @@ export const renderSettings: View = async (root, ctx) => {
         try {
           await api.updateMe({ name: name.value, tz: tz.value, locale: lang.value });
           const changedLang = lang.value !== getLang();
-          if (changedLang) setLang(lang.value as Lang);
+          if (changedLang) await setLang(lang.value as Lang);
           await ctx.refreshMe();
           toast(t('settings_saved'), 'ok');
           if (changedLang) ctx.navigate('/app/settings');

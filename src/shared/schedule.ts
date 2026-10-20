@@ -176,11 +176,32 @@ export function formatLocalDateTime(ms: number, tz: string, locale = 'en'): stri
   }).format(new Date(ms));
 }
 
+const DAY_NAMES: Record<string, string[]> & { en: string[] } = {
+  en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  fr: ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim'],
+  cs: ['po', 'út', 'st', 'čt', 'pá', 'so', 'ne'],
+  de: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+  es: ['lun', 'mar', 'mié', 'jue', 'vie', 'sáb', 'dom'],
+  it: ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'],
+  pt: ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'],
+  pl: ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'niedz'],
+};
+const DAY_PRESETS: Record<string, [string, string, string]> & { en: [string, string, string] } = {
+  en: ['every day', 'weekdays', 'weekends'],
+  fr: ['tous les jours', 'en semaine', 'le week-end'],
+  cs: ['každý den', 've všední dny', 'o víkendu'],
+  de: ['jeden Tag', 'werktags', 'am Wochenende'],
+  es: ['todos los días', 'entre semana', 'fines de semana'],
+  it: ['ogni giorno', 'nei giorni feriali', 'nel fine settimana'],
+  pt: ['todos os dias', 'dias úteis', 'fins de semana'],
+  pl: ['codziennie', 'w dni robocze', 'w weekendy'],
+};
+
 export function daysToLabel(days: number, locale = 'en'): string {
-  const names =
-    locale === 'fr' ? ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  if ((days & 127) === 127) return locale === 'fr' ? 'tous les jours' : 'every day';
-  if ((days & 127) === 31) return locale === 'fr' ? 'en semaine' : 'weekdays';
-  if ((days & 127) === 96) return locale === 'fr' ? 'le week-end' : 'weekends';
+  const names = DAY_NAMES[locale] ?? DAY_NAMES.en;
+  const presets = DAY_PRESETS[locale] ?? DAY_PRESETS.en;
+  if ((days & 127) === 127) return presets[0];
+  if ((days & 127) === 31) return presets[1];
+  if ((days & 127) === 96) return presets[2];
   return names.filter((_, i) => days & (1 << i)).join(', ');
 }

@@ -63,7 +63,7 @@ async function hookCheckin(env: Env, token: string, note: string): Promise<{ sta
   if (!user) return { status: 404, text: 'Unknown token' };
   const outcome = await performCheckin(env, user, 'hook', note);
   const time = formatLocalTime(outcome.at, user.tz, user.locale);
-  const text = user.locale === 'fr' ? `OK, check-in enregistré à ${time}.` : `OK, checked in at ${time}.`;
+  const text = message(user.locale, 'hookOk', { time });
   return { status: 200, text: text + (outcome.announcedTo.length ? ` → ${outcome.announcedTo.join(', ')}` : '') };
 }
 api.on(['GET', 'POST'], '/hook/:token', async (c) => {
@@ -392,8 +392,8 @@ api.post('/push/test', async (c) => {
     c.env,
     user,
     'test',
-    user.locale === 'fr' ? '👋 Test de notification I am home.' : '👋 I am home test notification.',
-    { title: 'I am home', body: user.locale === 'fr' ? 'Les notifications fonctionnent.' : 'Notifications are working.', tag: 'test', url: '/app' },
+    message(user.locale, 'pushTest'),
+    { title: 'I am home', body: message(user.locale, 'pushTestBody'), tag: 'test', url: '/app' },
   );
   return c.json({ ok: true, sent });
 });

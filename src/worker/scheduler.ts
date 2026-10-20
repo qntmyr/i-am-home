@@ -83,7 +83,7 @@ export function ruleTiming(rule: RuleRow) {
 
 async function sendReminder(env: Env, user: UserRow, rule: RuleRow, fireAt: number): Promise<void> {
   const contacts = await getContactsForRule(env.DB, rule.id);
-  const contactNames = contacts.map((c) => c.name).join(', ') || (user.locale === 'fr' ? 'tes proches' : 'your contacts');
+  const contactNames = contacts.map((c) => c.name).join(', ') || message(user.locale, 'contactsFallback');
   const deadline = formatLocalTime(fireAt, user.tz, user.locale);
   const text = message(user.locale, 'reminder', {
     userName: user.name || user.email,
@@ -93,11 +93,8 @@ async function sendReminder(env: Env, user: UserRow, rule: RuleRow, fireAt: numb
     appUrl: env.APP_URL,
   });
   const { sent } = await notifyUser(env, user, 'reminder', text, {
-    title: user.locale === 'fr' ? 'Tu es rentré ?' : 'Are you home yet?',
-    body:
-      user.locale === 'fr'
-        ? `${contactNames} sera prévenu·e à ${deadline} si tu ne fais pas ton check-in.`
-        : `${contactNames} will be told at ${deadline} if you don't check in.`,
+    title: message(user.locale, 'reminderTitle'),
+    body: message(user.locale, 'reminderBody', { contactName: contactNames, deadline }),
     tag: `reminder-${rule.id}`,
     url: '/app',
     checkinAction: true,
@@ -129,11 +126,9 @@ export async function sendAlert(env: Env, user: UserRow, rule: RuleRow, fireAt: 
       env,
       user,
       'alert_copy',
-      user.locale === 'fr'
-        ? `⚠️ Pas de check-in avant ${deadline} : ${sentTo.join(', ') || 'personne'} a été prévenu·e.`
-        : `⚠️ No check-in by ${deadline}: ${sentTo.join(', ') || 'nobody'} has been told.`,
+      message(user.locale, 'alertCopy', { deadline, contactName: sentTo.join(', ') || message(user.locale, 'nobody') }),
       {
-        title: user.locale === 'fr' ? 'Tes proches ont été prévenus' : 'Your contacts were alerted',
+        title: message(user.locale, 'alertCopyTitle'),
         body: sentTo.join(', '),
         tag: `alert-${rule.id}`,
         url: '/app',

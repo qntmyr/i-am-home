@@ -1,5 +1,5 @@
 import type { View } from '../main';
-import { getLang, setLang, t, type Lang } from '../i18n';
+import { LANGS, getLang, setLang, t, type Lang } from '../i18n';
 import { h, icon, type IconName } from '../ui';
 
 export const renderLanding: View = (root, ctx) => {
@@ -7,13 +7,18 @@ export const renderLanding: View = (root, ctx) => {
     e.preventDefault();
     ctx.navigate(path);
   };
-  const langSwitch = h(
-    'div',
-    { class: 'lang-switch', role: 'group', 'aria-label': 'Language' },
-    (['en', 'fr'] as Lang[]).map((l) =>
-      h('button', { type: 'button', class: getLang() === l ? 'on' : '', onClick: () => { setLang(l); ctx.navigate('/'); } }, l.toUpperCase()),
-    ),
+  const langSelect = h(
+    'select',
+    {
+      'aria-label': 'Language',
+      onChange: async (e: Event) => {
+        await setLang((e.target as HTMLSelectElement).value as Lang);
+        ctx.navigate('/');
+      },
+    },
+    LANGS.map((l) => h('option', { value: l.code, selected: getLang() === l.code }, l.label)),
   );
+  const langSwitch = h('div', { class: 'lang-switch' }, icon('globe'), langSelect);
 
   const step = (n: number, ico: IconName, title: string, text: string) =>
     h('div', { class: 'step-card' }, h('div', { class: 'num' }, String(n)), h('div', { class: 'ico' }, icon(ico)), h('h3', null, title), h('p', null, text));

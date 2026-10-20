@@ -3,7 +3,8 @@
 export type Plan = 'free' | 'pro';
 export type Channel = 'telegram' | 'email' | 'sms' | 'whatsapp';
 export type RuleKind = 'recurring' | 'once';
-export type Locale = 'en' | 'fr';
+export type Locale = 'en' | 'fr' | 'cs' | 'de' | 'es' | 'it' | 'pt' | 'pl';
+export const LOCALES: Locale[] = ['en', 'fr', 'cs', 'de', 'es', 'it', 'pt', 'pl'];
 export type CheckinSource = 'app' | 'hook' | 'telegram' | 'push' | 'test';
 
 export interface UserDTO {

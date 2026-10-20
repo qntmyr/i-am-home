@@ -918,22 +918,26 @@ textarea {
 }
 .lang-switch {
   display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  overflow: hidden;
-}
-.lang-switch button {
-  border: 0;
-  background: transparent;
-  padding: 6px 10px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 700;
+  padding: 4px 10px;
   color: var(--muted);
 }
-.lang-switch button.on {
-  background: var(--ink);
-  color: var(--bg);
+.lang-switch svg {
+  width: 16px;
+  height: 16px;
+}
+.lang-switch select {
+  border: 0;
+  background: transparent;
+  padding: 2px 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  appearance: auto;
 }
 .hero {
   display: grid;

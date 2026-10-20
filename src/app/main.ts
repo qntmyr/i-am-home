@@ -1,5 +1,5 @@
 import { api, ApiError } from './api';
-import { getLang, setLang, t, type Lang } from './i18n';
+import { ensureLang, getLang, setLang, t, type Lang } from './i18n';
 import { h, clear, icon, type IconName } from './ui';
 import type { MeDTO } from '../shared/types';
 import { renderLanding } from './views/landing';
@@ -41,7 +41,7 @@ export function navigate(path: string): void {
 async function refreshMe(): Promise<MeDTO | null> {
   try {
     state.me = await api.me();
-    if (state.me.user.locale !== getLang()) setLang(state.me.user.locale as Lang);
+    if (state.me.user.locale !== getLang()) await setLang(state.me.user.locale as Lang);
   } catch (e) {
     if (e instanceof ApiError && e.status === 401) state.me = null;
     else if (e instanceof ApiError && e.status === 0) {
@@ -151,4 +151,4 @@ if ('serviceWorker' in navigator && !import.meta.env.DEV) {
   });
 }
 
-void render();
+void ensureLang().then(render);

@@ -5,7 +5,7 @@ One tap to tell the people who worry about you that you're home. No location sha
 - **Check in** from the big button, a Telegram `/home`, a push notification action, or a secret link called by an iOS Shortcut / Android automation when your phone joins your home Wi‑Fi.
 - **Rules**: "if I haven't checked in by 20:00 on weekdays, tell Mum" (recurring) or "home by 23:30 tonight" (one-off). You get a reminder before the deadline; your contacts are told only if you miss it.
 - **Contacts** receive a short message on Telegram (free), email (free), SMS or WhatsApp (Pro). They don't need an account.
-- **PWA**: installs on any phone, works offline for the shell, English and French.
+- **PWA**: installs on any phone, works offline for the shell. 8 languages: English, French, Czech, German, Spanish, Italian, Portuguese, Polish (UI and every message sent to contacts).
 - **Pro** via Lemon Squeezy: up to 20 contacts, SMS and WhatsApp. €2.99/month or €19 once.
 
 ## Stack

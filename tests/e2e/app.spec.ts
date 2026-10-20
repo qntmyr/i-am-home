@@ -15,9 +15,12 @@ async function signIn(page: Page): Promise<string> {
 test('landing page renders and switches language', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('h1')).toContainText('Tell them you got home');
-  await page.click('.lang-switch button:has-text("FR")');
+  await page.selectOption('.lang-switch select', 'fr');
   await expect(page.locator('h1')).toContainText('Dis-leur que tu es rentré');
-  await page.click('.lang-switch button:has-text("EN")');
+  await page.selectOption('.lang-switch select', 'cs');
+  await expect(page.locator('h1')).toContainText('Dej jim vědět');
+  await page.selectOption('.lang-switch select', 'en');
+  await expect(page.locator('h1')).toContainText('Tell them you got home');
 });
 
 test('protected routes redirect to login', async ({ page }) => {

@@ -20,6 +20,23 @@ describe('messages', () => {
     expect(normalizeLocale('fr-FR')).toBe('fr');
     expect(normalizeLocale('FR')).toBe('fr');
     expect(normalizeLocale('en-GB')).toBe('en');
+    expect(normalizeLocale('cs-CZ')).toBe('cs');
+    expect(normalizeLocale('pt_BR')).toBe('pt');
+    expect(normalizeLocale('zh')).toBe('en');
+    expect(normalizeLocale(undefined)).toBe('en');
+  });
+
+  it('has every key in every locale', () => {
+    const ctx = { userName: 'Ana', contactName: 'Mum', time: '20:00', deadline: '20:00', custom: 'x', appUrl: 'https://x.y' };
+    const keys = ['announce', 'alert', 'reminder', 'reminderTitle', 'reminderBody', 'alertCopy', 'alertCopyTitle', 'hookOk', 'tgStatus', 'tgHelp', 'magicSubject', 'magicBody'] as const;
+    for (const locale of ['en', 'fr', 'cs', 'de', 'es', 'it', 'pt', 'pl'] as const) {
+      for (const key of keys) {
+        const text = message(locale, key, ctx);
+        expect(text, `${locale}.${key}`).not.toBe('');
+      }
+      expect(message(locale, 'announce', ctx)).toContain('Ana');
+      expect(message(locale, 'alert', ctx)).toContain('20:00');
+    }
     expect(normalizeLocale(undefined)).toBe('en');
   });
 });
