@@ -1,0 +1,30 @@
+# Copy to .dev.vars for local development (never commit .dev.vars).
+# Everything is optional in DEV_MODE: missing providers are logged to /api/dev/outbox instead of sent.
+
+SESSION_SECRET=change-me
+
+# Telegram bot (create one with @BotFather)
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_BOT_USERNAME=IGotHomeBot
+TELEGRAM_WEBHOOK_SECRET=
+
+# Email via Resend
+RESEND_API_KEY=
+EMAIL_FROM="igothome <hello@yourdomain.com>"
+
+# SMS / WhatsApp via Twilio (Pro channels)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_SMS=+420000000000
+TWILIO_FROM_WHATSAPP=whatsapp:+14155238886
+
+# Web push: node scripts/gen-vapid.mjs
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:you@example.com
+
+# Lemon Squeezy
+LEMONSQUEEZY_WEBHOOK_SECRET=
+LS_CHECKOUT_MONTHLY=https://yourstore.lemonsqueezy.com/checkout/buy/...
+LS_CHECKOUT_LIFETIME=https://yourstore.lemonsqueezy.com/checkout/buy/...
+LS_LIFETIME_VARIANT_ID=
