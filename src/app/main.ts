@@ -122,7 +122,12 @@ function shell(active: string, main: HTMLElement): HTMLElement {
     h('a', { href: '/', class: 'brand', onClick: (e: Event) => { e.preventDefault(); navigate('/'); } }, logo(), h('span', { class: 'wordmark' }, t('brand'))),
     h('nav', { class: 'nav' }, items.map(link)),
     h('div', { class: 'spacer' }),
-    h('p', { class: 'small muted', style: 'padding: 0 12px' }, state.me?.user.email ?? ''),
+    h(
+      'div',
+      { class: 'me', title: state.me?.user.email ?? '' },
+      h('div', { class: 'avatar' }, (state.me?.user.name || state.me?.user.email || '?').slice(0, 1).toUpperCase()),
+      h('div', { class: 'email' }, state.me?.user.email ?? ''),
+    ),
   );
   const tabbar = h('nav', { class: 'tabbar' }, items.map(link));
   const wrap = h('div', { class: 'shell' }, sidebar, h('div', null, offlineBar(), main), tabbar);

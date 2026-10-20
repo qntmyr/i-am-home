@@ -243,7 +243,7 @@ export const renderDashboard: View = async (root, ctx) => {
   root.append(
     h('div', { class: 'page-head' }, h('h1', null, t('dash_hi', { name })), h('p', { class: 'muted' }, t('dash_tap'))),
     h('div', { class: 'hero-btn-wrap' }, button, statusLine),
-    h('div', { class: 'stack', style: 'margin-top:18px' }, nextCard, setupCard, h('div', { class: 'card' }, h('div', { class: 'row between wrap gap' }, h('div', null, h('h3', null, t('dash_trip_title')), h('p', { class: 'muted small', style: 'margin:0' }, t('dash_trip_d'))), tripBtn)), activityCard),
+    h('div', { class: 'stack', style: 'margin-top:18px' }, nextCard, setupCard, h('div', { class: 'card tint' }, h('div', { class: 'row between wrap gap' }, h('div', null, h('h3', null, t('dash_trip_title')), h('p', { class: 'muted small', style: 'margin:0' }, t('dash_trip_d'))), tripBtn)), activityCard),
   );
 
   await load();

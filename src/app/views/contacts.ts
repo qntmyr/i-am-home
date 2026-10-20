@@ -24,7 +24,7 @@ export const renderContacts: View = async (root, ctx) => {
     addBtn.disabled = atLimit;
     limitNote.hidden = !atLimit || me.user.plan === 'pro';
     if (!contacts.length) {
-      list.append(h('div', { class: 'empty' }, t('contacts_empty')));
+      list.append(h('div', { class: 'empty' }, h('div', { class: 'empty-ico' }, icon('users')), h('span', null, t('contacts_empty'))));
       return;
     }
     for (const c of contacts) list.append(item(c));

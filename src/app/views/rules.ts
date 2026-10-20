@@ -26,7 +26,7 @@ export const renderRules: View = async (root, ctx) => {
   function paint() {
     clear(list);
     if (!rules.length) {
-      list.append(h('div', { class: 'empty' }, t('rules_empty')));
+      list.append(h('div', { class: 'empty' }, h('div', { class: 'empty-ico' }, icon('clock')), h('span', null, t('rules_empty'))));
       return;
     }
     const sorted = [...rules].sort((a, b) => Number(b.enabled) - Number(a.enabled) || (a.nextFireAt ?? Infinity) - (b.nextFireAt ?? Infinity));
