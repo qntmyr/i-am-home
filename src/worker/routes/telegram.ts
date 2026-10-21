@@ -1,6 +1,6 @@
 // Telegram bot webhook: links contacts and users, accepts /home check-ins.
 import { Hono } from 'hono';
-import type { Env } from '../env';
+import { telegramWebhookSecret, type Env } from '../env';
 import { getUser, logEvent, type ContactRow, type UserRow } from '../db';
 import { performCheckin } from '../checkin';
 import { sendTelegram } from '../notify';
@@ -108,7 +108,7 @@ async function handleUpdate(env: Env, update: TelegramUpdate): Promise<void> {
 }
 
 telegram.post('/webhook', async (c) => {
-  const expected = c.env.TELEGRAM_WEBHOOK_SECRET;
+  const expected = await telegramWebhookSecret(c.env);
   if (expected) {
     const got = c.req.header('x-telegram-bot-api-secret-token') ?? '';
     if (!timingSafeEqual(got, expected)) return c.text('forbidden', 403);

@@ -1,11 +1,16 @@
 name: Deploy
 
-# Deploys the Worker on every push to main, once the Cloudflare secrets are set in the repository:
-#   CLOUDFLARE_API_TOKEN (Workers Scripts: Edit, D1: Edit) and CLOUDFLARE_ACCOUNT_ID.
+# Deploys igothome to Cloudflare on every push to main (and on demand from the Actions tab).
+# Turn it on with the repository variable DEPLOY_ENABLED=true and the secrets
+# CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID. Everything else is optional; see docs/DEPLOY.md.
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -19,15 +24,31 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck && npm test && npx vite build
-      - name: Apply D1 migrations
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 migrations apply igothome --remote
-      - name: Deploy Worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+      - name: Deploy to Cloudflare
+        run: node scripts/deploy.mjs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Plain settings (repository variables)
+          APP_URL: ${{ vars.APP_URL }}
+          TELEGRAM_BOT_USERNAME: ${{ vars.TELEGRAM_BOT_USERNAME }}
+          EMAIL_FROM: ${{ vars.EMAIL_FROM }}
+          STRIPE_LINK_MONTHLY: ${{ vars.STRIPE_LINK_MONTHLY }}
+          STRIPE_LINK_LIFETIME: ${{ vars.STRIPE_LINK_LIFETIME }}
+          LS_CHECKOUT_MONTHLY: ${{ vars.LS_CHECKOUT_MONTHLY }}
+          LS_CHECKOUT_LIFETIME: ${{ vars.LS_CHECKOUT_LIFETIME }}
+          LS_LIFETIME_VARIANT_ID: ${{ vars.LS_LIFETIME_VARIANT_ID }}
+          LEGAL_NAME: ${{ vars.LEGAL_NAME }}
+          LEGAL_ADDRESS: ${{ vars.LEGAL_ADDRESS }}
+          LEGAL_ID: ${{ vars.LEGAL_ID }}
+          CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
+          # Secrets
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_FROM_SMS: ${{ secrets.TWILIO_FROM_SMS }}
+          TWILIO_FROM_WHATSAPP: ${{ secrets.TWILIO_FROM_WHATSAPP }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          LEMONSQUEEZY_WEBHOOK_SECRET: ${{ secrets.LEMONSQUEEZY_WEBHOOK_SECRET }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}

@@ -8,7 +8,7 @@ import { renderDashboard } from './views/dashboard';
 import { renderContacts } from './views/contacts';
 import { renderRules } from './views/rules';
 import { renderSettings } from './views/settings';
-import { renderGuide, renderPrivacy } from './views/static';
+import { renderGuide, renderPrivacy, renderTerms } from './views/static';
 
 export interface AppState {
   me: MeDTO | null;
@@ -80,6 +80,11 @@ async function render(): Promise<void> {
   if (path === '/privacy') {
     clear(root);
     cleanup = await renderPrivacy(root, ctx);
+    return;
+  }
+  if (path === '/terms') {
+    clear(root);
+    cleanup = await renderTerms(root, ctx);
     return;
   }
   if (path === '/automations' || path === '/shortcuts') {

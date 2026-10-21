@@ -23,6 +23,18 @@ test('landing page renders and switches language', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Tell them you got home');
 });
 
+test('terms page is reachable from the landing footer and warns it is not an emergency service', async ({ page }) => {
+  await page.goto('/');
+  await page.click('footer a[href="/terms"]');
+  await expect(page.locator('h1')).toContainText('Terms of service');
+  await expect(page.locator('.notice')).toContainText('112');
+});
+
+test('admin stats need the admin token', async ({ request }) => {
+  const r = await request.get('/api/admin/stats');
+  expect(r.status()).toBe(401);
+});
+
 test('protected routes redirect to login', async ({ page }) => {
   await page.goto('/app/rules');
   await page.waitForURL('**/login');
@@ -60,6 +72,8 @@ test('full flow: sign in, contact, rule, check-in, settings', async ({ page }) =
   await page.click('[data-testid=add-rule]');
   await page.fill('.modal-card input[type=text]', 'Back from work');
   await page.fill('.modal-card input[type=time]', '23:59');
+  // 24 h window so the check-in below counts whatever time of day the suite runs.
+  await page.selectOption('.modal-card select:has(option[value="18"])', '24');
   await page.click('[data-testid=save-rule]');
   await expect(page.getByTestId('rule')).toHaveCount(1);
   await expect(page.getByTestId('rule')).toContainText('Back from work');
