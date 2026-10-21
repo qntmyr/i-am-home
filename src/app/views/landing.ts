@@ -176,7 +176,7 @@ export const renderLanding: View = (root, ctx) => {
         { class: 'foot' },
         h('div', { class: 'brand' }, logo(), h('span', { class: 'wordmark' }, t('brand'))),
         h('span', { class: 'muted' }, `© ${new Date().getFullYear()} · ${t('footer_made')}`),
-        h('span', { class: 'links' }, h('a', { href: '/privacy', onClick: go('/privacy') }, t('footer_privacy')), h('a', { href: '/automations', onClick: go('/automations') }, t('footer_shortcuts'))),
+        h('span', { class: 'links' }, h('a', { href: '/privacy', onClick: go('/privacy') }, t('footer_privacy')), h('a', { href: '/terms', onClick: go('/terms') }, t('footer_terms')), h('a', { href: '/automations', onClick: go('/automations') }, t('footer_shortcuts'))),
       ),
     ),
   );

@@ -191,7 +191,7 @@ export const renderSettings: View = async (root, ctx) => {
     ),
   );
 
-  root.append(h('div', { class: 'page-head' }, h('h1', null, t('settings_title'))), profile, pushCard, installCard ?? '', tgCard, hookCard, planCard, accountCard, h('p', { class: 'small muted center', style: 'margin-top:20px' }, h('a', { href: '/privacy', onClick: (e: Event) => { e.preventDefault(); ctx.navigate('/privacy'); } }, t('footer_privacy'))));
+  root.append(h('div', { class: 'page-head' }, h('h1', null, t('settings_title'))), profile, pushCard, installCard ?? '', tgCard, hookCard, planCard, accountCard, h('p', { class: 'small muted center', style: 'margin-top:20px' }, h('a', { href: '/privacy', onClick: (e: Event) => { e.preventDefault(); ctx.navigate('/privacy'); } }, t('footer_privacy')), ' · ', h('a', { href: '/terms', onClick: (e: Event) => { e.preventDefault(); ctx.navigate('/terms'); } }, t('footer_terms'))));
   paintTelegram();
   await paintPush();
 };

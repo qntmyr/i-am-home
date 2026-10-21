@@ -47,15 +47,16 @@ export const renderContacts: View = async (root, ctx) => {
     const channel = h(
       'select',
       { disabled: !!existing },
-      (['telegram', 'email', 'sms', 'whatsapp'] as Channel[]).map((ch) =>
-        h('option', { value: ch, selected: (existing?.channel ?? 'telegram') === ch, disabled: !me.limits.channels.includes(ch) }, t(`channel_${ch}`)),
+      (['telegram', 'email', 'sms', 'whatsapp'] as Channel[]).filter((ch) => existing?.channel === ch || (me.availableChannels ?? []).includes(ch)).map((ch) =>
+        h('option', { value: ch, selected: (existing?.channel ?? me.availableChannels?.[0] ?? 'telegram') === ch, disabled: !me.limits.channels.includes(ch) }, t(`channel_${ch}`)),
       ),
     ) as HTMLSelectElement;
     const address = h('input', { type: 'text', value: existing?.address ?? '', maxlength: 120, disabled: !!existing }) as HTMLInputElement;
     const addressField = h('label', { class: 'field' }, h('span', null, ''), address);
     const announce = h('input', { type: 'checkbox', checked: existing ? existing.announceCheckins : true }) as HTMLInputElement;
     const err = h('div', { class: 'form-error', hidden: true });
-    const proNote = h('p', { class: 'small muted' }, me.user.plan === 'pro' ? '' : t('contacts_pro_channel'));
+    const proChannelsOn = (me.availableChannels ?? []).some((ch) => ch === 'sms' || ch === 'whatsapp');
+    const proNote = h('p', { class: 'small muted' }, me.user.plan === 'pro' || !proChannelsOn ? '' : t('contacts_pro_channel'));
     const save = h('button', { class: 'btn', type: 'submit', 'data-testid': 'save-contact' }, t('contacts_save'));
     const cancel = h('button', { class: 'btn btn-ghost', type: 'button' }, t('contacts_cancel'));
 

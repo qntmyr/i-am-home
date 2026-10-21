@@ -1,7 +1,7 @@
 // Authenticated JSON API used by the PWA.
 import { Hono } from 'hono';
 import type { Env } from '../env';
-import { isDev } from '../env';
+import { availableChannels, isDev } from '../env';
 import {
   contactToDTO,
   eventToDTO,
@@ -22,7 +22,7 @@ import { performCheckin } from '../checkin';
 import { ruleTiming, sendAlert } from '../scheduler';
 import { devOutbox, sendToContact, notifyUser } from '../notify';
 import { getBotUsername } from './telegram';
-import { HttpError, clampInt, isEmail, isPhone, newId, randomToken, str } from '../util';
+import { HttpError, clampInt, isEmail, isPhone, newId, randomToken, str, timingSafeEqual } from '../util';
 import { message, normalizeLocale } from '../../shared/messages';
 import { PLAN_LIMITS, type Channel, type MeDTO, type RuleKind, type StatusDTO } from '../../shared/types';
 import { computeNextTimes, formatLocalTime, isValidTimeZone, parseTimeLocal, checkinSatisfies } from '../../shared/schedule';
@@ -71,6 +71,38 @@ api.on(['GET', 'POST'], '/hook/:token', async (c) => {
   return c.text(r.text, r.status);
 });
 
+// Public: who runs the service (shown on /terms) and whether payments are switched on.
+api.get('/public', (c) =>
+  c.json({
+    legalName: c.env.LEGAL_NAME ?? null,
+    legalAddress: c.env.LEGAL_ADDRESS ?? null,
+    legalId: c.env.LEGAL_ID ?? null,
+    contactEmail: c.env.CONTACT_EMAIL ?? null,
+  }),
+);
+
+// Launch metrics for the operator: curl -H "authorization: Bearer $ADMIN_TOKEN" https://…/api/admin/stats
+api.get('/admin/stats', async (c) => {
+  const token = c.env.ADMIN_TOKEN;
+  const got = (c.req.header('authorization') ?? '').replace(/^Bearer\s+/i, '');
+  if (!token || !got || !timingSafeEqual(got, token)) throw new HttpError(401, 'Unauthorized', 'unauthorized');
+  const nowMs = Date.now();
+  const day = 24 * 3600 * 1000;
+  const one = async (sql: string, ...binds: unknown[]) => (await c.env.DB.prepare(sql).bind(...binds).first<{ n: number }>())?.n ?? 0;
+  return c.json({
+    at: nowMs,
+    users: await one('SELECT COUNT(*) AS n FROM users'),
+    usersLast7d: await one('SELECT COUNT(*) AS n FROM users WHERE created_at > ?', nowMs - 7 * day),
+    usersWithLinkedContact: await one('SELECT COUNT(DISTINCT user_id) AS n FROM contacts WHERE verified = 1'),
+    usersWithRule: await one('SELECT COUNT(DISTINCT user_id) AS n FROM rules WHERE enabled = 1'),
+    activeLast7d: await one('SELECT COUNT(DISTINCT user_id) AS n FROM checkins WHERE at > ?', nowMs - 7 * day),
+    checkinsLast24h: await one('SELECT COUNT(*) AS n FROM checkins WHERE at > ?', nowMs - day),
+    alertsLast7d: await one("SELECT COUNT(*) AS n FROM events WHERE type = 'alert' AND at > ?", nowMs - 7 * day),
+    pro: await one("SELECT COUNT(*) AS n FROM users WHERE plan = 'pro' AND (plan_until IS NULL OR plan_until > ?)", nowMs),
+    proLifetime: await one("SELECT COUNT(*) AS n FROM users WHERE plan = 'pro' AND plan_until IS NULL"),
+  });
+});
+
 // ---------- Everything below requires a session ----------
 
 api.use('/*', requireUser);
@@ -92,19 +124,30 @@ api.get('/me', async (c) => {
     hookUrl: meta(c, user).hookUrl,
     vapidPublicKey: c.env.VAPID_PUBLIC_KEY ?? null,
     checkout: {
-      monthly: c.env.LS_CHECKOUT_MONTHLY ? withCheckoutParams(c.env.LS_CHECKOUT_MONTHLY, user) : null,
-      lifetime: c.env.LS_CHECKOUT_LIFETIME ? withCheckoutParams(c.env.LS_CHECKOUT_LIFETIME, user) : null,
+      monthly: checkoutUrl(c.env.STRIPE_LINK_MONTHLY, c.env.LS_CHECKOUT_MONTHLY, user),
+      lifetime: checkoutUrl(c.env.STRIPE_LINK_LIFETIME, c.env.LS_CHECKOUT_LIFETIME, user),
     },
     limits: PLAN_LIMITS[plan],
+    availableChannels: availableChannels(c.env),
   };
   return c.json(dto);
 });
 
-function withCheckoutParams(url: string, user: UserRow): string {
-  const u = new URL(url);
-  u.searchParams.set('checkout[custom][user_id]', user.id);
-  u.searchParams.set('checkout[email]', user.email);
-  return u.toString();
+/** Stripe Payment Link first (client_reference_id ties the payment to the user), Lemon Squeezy checkout otherwise. */
+export function checkoutUrl(stripeLink: string | undefined, lsCheckout: string | undefined, user: Pick<UserRow, 'id' | 'email'>): string | null {
+  if (stripeLink) {
+    const u = new URL(stripeLink);
+    u.searchParams.set('client_reference_id', user.id);
+    u.searchParams.set('prefilled_email', user.email);
+    return u.toString();
+  }
+  if (lsCheckout) {
+    const u = new URL(lsCheckout);
+    u.searchParams.set('checkout[custom][user_id]', user.id);
+    u.searchParams.set('checkout[email]', user.email);
+    return u.toString();
+  }
+  return null;
 }
 
 api.patch('/me', async (c) => {
@@ -209,12 +252,13 @@ api.get('/contacts', async (c) => {
   return c.json({ contacts: rows.map((r) => contactToDTO(r, bot)) });
 });
 
-function validateContact(body: Record<string, unknown>, plan: 'free' | 'pro') {
+function validateContact(env: Env, body: Record<string, unknown>, plan: 'free' | 'pro') {
   const name = str(body.name, 60);
   const channel = str(body.channel, 16) as Channel;
   const address = str(body.address, 120);
   if (!name) throw new HttpError(400, 'A name is required', 'name_required');
   if (!['telegram', 'email', 'sms', 'whatsapp'].includes(channel)) throw new HttpError(400, 'Unknown channel', 'bad_channel');
+  if (!availableChannels(env).includes(channel)) throw new HttpError(400, 'This channel is not available yet', 'channel_unavailable');
   if (!PLAN_LIMITS[plan].channels.includes(channel)) throw new HttpError(402, 'This channel needs the Pro plan', 'plan_required');
   if (channel === 'email' && !isEmail(address)) throw new HttpError(400, 'Invalid email address', 'bad_address');
   if ((channel === 'sms' || channel === 'whatsapp') && !isPhone(address.replace(/[\s().-]/g, '')))
@@ -229,7 +273,7 @@ api.post('/contacts', async (c) => {
   const body = await c.req.json<Record<string, unknown>>().catch(() => ({}) as Record<string, unknown>);
   const existing = await getContacts(c.env.DB, user.id);
   if (existing.length >= PLAN_LIMITS[plan].maxContacts) throw new HttpError(402, 'Contact limit reached for your plan', 'plan_limit');
-  const v = validateContact(body, plan);
+  const v = validateContact(c.env, body, plan);
   const id = newId('c_');
   const linkToken = v.channel === 'telegram' ? 'c_' + randomToken(24) : null;
   await c.env.DB.prepare(

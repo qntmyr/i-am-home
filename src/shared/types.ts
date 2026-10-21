@@ -85,6 +85,8 @@ export interface MeDTO {
   vapidPublicKey: string | null;
   checkout: { monthly: string | null; lifetime: string | null };
   limits: PlanLimits;
+  /** Channels whose provider is configured on this server. */
+  availableChannels: Channel[];
 }
 
 export interface PlanLimits {

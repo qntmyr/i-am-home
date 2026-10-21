@@ -296,6 +296,25 @@ export const en = {
   time_ago_h: '{n} h ago',
   time_ago_d: '{n} d ago',
   time_just_now: 'just now',
+  // terms
+  footer_terms: "Terms",
+  terms_title: "Terms of service",
+  terms_updated: "Last updated: 21 October 2026",
+  terms_service_t: "The service",
+  terms_service: "igothome lets you tell chosen contacts that you got home, and warns them when a check-in you planned does not arrive in time. It never shares your location.",
+  terms_safety_t: "Not an emergency service",
+  terms_safety: "igothome is a convenience, not a safety system. Messages can be late or lost (phone off, no network, a provider outage). Do not rely on it alone when someone may be in danger. In an emergency, call 112.",
+  terms_account_t: "Your account",
+  terms_account: "You must be at least 16. Only add people who agree to receive your messages, and do not use igothome to track, harass or spam anyone. We may close accounts that break these rules.",
+  terms_pay_t: "Pro plan, payments and refunds",
+  terms_pay: "Pro costs €2.99 a month or €19 once for lifetime access, VAT included. Payments are handled by our reseller (Stripe or Lemon Squeezy), which issues the invoice. A monthly plan can be cancelled at any time and stays active until the end of the paid month. If you are not happy, ask for a full refund within 14 days of a payment: no questions asked.",
+  terms_end_t: "Ending",
+  terms_end: "You can delete your account and all its data from Settings at any time. If we ever shut igothome down, we will tell you by email at least 30 days before.",
+  terms_liability_t: "Liability",
+  terms_liability: "The service is provided as is. To the extent the law allows, our liability is limited to what you paid us in the last 12 months. Czech law applies; as an EU consumer you keep the mandatory protections of your country.",
+  terms_operator_t: "Who runs igothome",
+  terms_contact: "Contact",
+  privacy_pay: "Payments are processed by Stripe or Lemon Squeezy, which receive your email address. We never see your card.",
 };
 
 export type Key = keyof typeof en;
